@@ -7,8 +7,8 @@ import waifufinder
 let client = Waifufinder()
 
 do {
-    let proxy = try await client.get_random_images(rating: "explicit")
-    print(proxy)
+    let images = try await client.get_random_images(rating: "explicit")
+    print(images)
 } catch {
     print("Error: \(error)")
 }
