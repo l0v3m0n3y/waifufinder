@@ -35,6 +35,30 @@ public class Waifufinder {
         ]
     }
 
+    public func get_image_by_id(id: Int) async throws -> Any {
+        guard let url = URL(string: "\(api)/images/\(id)") else {
+            throw NSError(domain: "Invalid URL", code: -1)
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let json = try JSONSerialization.jsonObject(with: data)
+        return json
+    }
+
+    public func get_list_images(rating: String, limit: Int = 1) async throws -> Any {
+        guard let url = URL(string: "\(api)/images?rating=\(rating)&limit=\(limit)") else {
+            throw NSError(domain: "Invalid URL", code: -1)
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let json = try JSONSerialization.jsonObject(with: data)
+        return json
+    }
+
     public func get_random_images(rating: String, limit: Int = 1) async throws -> Any {
         guard let url = URL(string: "\(api)/images/random?rating=\(rating)&limit=\(limit)") else {
             throw NSError(domain: "Invalid URL", code: -1)
